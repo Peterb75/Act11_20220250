@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:movieapi/models/popular.dart';
 import 'package:auto_route/auto_route.dart';
+import 'package:movieapi/models/results.dart';
 import 'package:movieapi/services/router_service.dart';
 
 @RoutePage()
@@ -15,6 +16,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   late Future<Popular> _futurePopular;
+  late List<Results> _resultsList = []; // Cambiado a List<Results>
 
   @override
   void initState() {
@@ -30,13 +32,20 @@ class _HomePageState extends State<HomePage> {
 
     if (response.statusCode == 200) {
       final Map<String, dynamic> jsonData = json.decode(response.body);
-      return Popular.fromJson(jsonData);
+      final popularData = Popular.fromJson(jsonData);
+
+      setState(() {
+        _resultsList = List.from(popularData.results); // Crear una copia modificable
+      });
+
+      return popularData;
     } else {
       throw Exception('Failed to fetch popular movies');
     }
   }
-@override
-Widget build(BuildContext context) {
+
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text('Popular Movies'),
@@ -50,39 +59,41 @@ Widget build(BuildContext context) {
             } else if (snapshot.hasError) {
               return Text('Error: ${snapshot.error}');
             } else {
-              final popularData = snapshot.data!;
-              return ListView.builder(
-                itemCount: popularData.results.length,
-                itemBuilder: (context, index) {
-                  final result = popularData.results[index];
-                  return ListTile(
-                    title: Text(result.title),
-                    subtitle: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(result.overview),
-                        Text('Popularity: ${result.popularity}'),
-                      ],
-                    ),
-                    onTap: () {
-                      AutoRouter.of(context).push(DetailRoute(movie: result));                    },
-                    leading: CircleAvatar(
-                      backgroundImage: NetworkImage(
-                          'https://image.tmdb.org/t/p/w500${result.poster_path}'), // Agrega la URL de la imagen
-                    ),
-                    trailing: IconButton(
-          icon: Icon(Icons.search),
-          onPressed: () {
-            // Acción a realizar cuando se presiona el icono
-            print('Se presionó el botón de búsqueda');
-          },
-        ),
-                  );
+              return ReorderableListView(
+                onReorder: (oldIndex, newIndex) {
+                  setState(() {
+                    if (newIndex > oldIndex) {
+                      newIndex -= 1;
+                    }
+                    final result = _resultsList.removeAt(oldIndex);
+                    _resultsList.insert(newIndex, result);
+                  });
                 },
+                children: <Widget>[
+                  for (final result in _resultsList)
+                    ListTile(
+                      key: Key('${result.title}'),
+                      title: Text(result.title),
+                      subtitle: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text('Popularity: ${result.popularity}'),
+                        ],
+                      ),
+                      onTap: () {
+                        AutoRouter.of(context).push(DetailRoute(movie: result));
+                      },
+                      leading: CircleAvatar(
+                        backgroundImage: NetworkImage(
+                            'https://image.tmdb.org/t/p/w500${result.poster_path}'),
+                      ),
+                    ),
+                ],
               );
             }
           },
         ),
       ),
     );
-  }}
+  }
+}

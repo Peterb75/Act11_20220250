@@ -40,7 +40,7 @@ class DetailRoute extends PageRouteInfo<DetailRouteArgs> {
   DetailRoute({
     Key? key,
     required Results movie,
-    List<PageRouteInfo>? children, required int movieIndex,
+    List<PageRouteInfo>? children,
   }) : super(
           DetailRoute.name,
           args: DetailRouteArgs(
