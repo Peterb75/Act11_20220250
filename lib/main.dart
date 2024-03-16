@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
-import 'pages/home_page.dart';
+import 'package:hive/hive.dart';
+import 'package:movieapi/app.dart';
+import 'package:movieapi/models/popular.dart';
+import 'package:movieapi/models/results.dart';
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  //registrerHiveHandler(); 
-  //registrerManagersHandler();
-
+  Hive.registerAdapter(PopularAdapter());
+  Hive.registerAdapter(ResultsAdapter());
   runApp(const MyApp());
 }

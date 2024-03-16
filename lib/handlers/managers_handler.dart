@@ -1,8 +1,10 @@
-import 'package:auto_route/auto_route.dart';
 import 'package:get_it/get_it.dart';
+import 'package:movieapi/services/router_service.dart'; 
 
-final _get => GetIt.I.get;
+final getIt = GetIt.instance;
 
-MoviesManager get moviesManager => _get<moviesManager>();
-RouterService get routerService => _get<routerService>();
+void setupServices() {
+  getIt.registerSingleton<RouterService>(RouterService());
+}
 
+RouterService get routerService => getIt<RouterService>();

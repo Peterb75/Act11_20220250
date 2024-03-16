@@ -18,7 +18,7 @@ class PopularAdapter extends TypeAdapter<Popular> {
     };
     return Popular(
       page: fields[0] as int,
-      results: (fields[1] as List).cast<Object>(),
+      results: (fields[1] as List).cast<Results>(),
       total_pages: fields[2] as int,
       total_results: fields[3] as int,
     );
@@ -56,8 +56,9 @@ class PopularAdapter extends TypeAdapter<Popular> {
 _$PopularImpl _$$PopularImplFromJson(Map<String, dynamic> json) =>
     _$PopularImpl(
       page: json['page'] as int,
-      results:
-          (json['results'] as List<dynamic>).map((e) => e as Object).toList(),
+      results: (json['results'] as List<dynamic>)
+          .map((e) => Results.fromJson(e as Map<String, dynamic>))
+          .toList(),
       total_pages: json['total_pages'] as int,
       total_results: json['total_results'] as int,
     );

@@ -25,7 +25,7 @@ mixin _$Popular {
   int get page => throw _privateConstructorUsedError;
   @HiveField(1)
   @JsonKey(name: 'results')
-  List<Object> get results => throw _privateConstructorUsedError;
+  List<Results> get results => throw _privateConstructorUsedError;
   @HiveField(2)
   @JsonKey(name: 'total_pages')
   int get total_pages => throw _privateConstructorUsedError;
@@ -45,7 +45,7 @@ abstract class $PopularCopyWith<$Res> {
   @useResult
   $Res call(
       {@HiveField(0) @JsonKey(name: 'page') int page,
-      @HiveField(1) @JsonKey(name: 'results') List<Object> results,
+      @HiveField(1) @JsonKey(name: 'results') List<Results> results,
       @HiveField(2) @JsonKey(name: 'total_pages') int total_pages,
       @HiveField(3) @JsonKey(name: 'total_results') int total_results});
 }
@@ -76,7 +76,7 @@ class _$PopularCopyWithImpl<$Res, $Val extends Popular>
       results: null == results
           ? _value.results
           : results // ignore: cast_nullable_to_non_nullable
-              as List<Object>,
+              as List<Results>,
       total_pages: null == total_pages
           ? _value.total_pages
           : total_pages // ignore: cast_nullable_to_non_nullable
@@ -98,7 +98,7 @@ abstract class _$$PopularImplCopyWith<$Res> implements $PopularCopyWith<$Res> {
   @useResult
   $Res call(
       {@HiveField(0) @JsonKey(name: 'page') int page,
-      @HiveField(1) @JsonKey(name: 'results') List<Object> results,
+      @HiveField(1) @JsonKey(name: 'results') List<Results> results,
       @HiveField(2) @JsonKey(name: 'total_pages') int total_pages,
       @HiveField(3) @JsonKey(name: 'total_results') int total_results});
 }
@@ -127,7 +127,7 @@ class __$$PopularImplCopyWithImpl<$Res>
       results: null == results
           ? _value._results
           : results // ignore: cast_nullable_to_non_nullable
-              as List<Object>,
+              as List<Results>,
       total_pages: null == total_pages
           ? _value.total_pages
           : total_pages // ignore: cast_nullable_to_non_nullable
@@ -147,7 +147,7 @@ class _$PopularImpl implements _Popular {
       {@HiveField(0) @JsonKey(name: 'page') required this.page,
       @HiveField(1)
       @JsonKey(name: 'results')
-      required final List<Object> results,
+      required final List<Results> results,
       @HiveField(2) @JsonKey(name: 'total_pages') required this.total_pages,
       @HiveField(3)
       @JsonKey(name: 'total_results')
@@ -161,11 +161,11 @@ class _$PopularImpl implements _Popular {
   @HiveField(0)
   @JsonKey(name: 'page')
   final int page;
-  final List<Object> _results;
+  final List<Results> _results;
   @override
   @HiveField(1)
   @JsonKey(name: 'results')
-  List<Object> get results {
+  List<Results> get results {
     if (_results is EqualUnmodifiableListView) return _results;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_results);
@@ -226,7 +226,7 @@ abstract class _Popular implements Popular {
       {@HiveField(0) @JsonKey(name: 'page') required final int page,
       @HiveField(1)
       @JsonKey(name: 'results')
-      required final List<Object> results,
+      required final List<Results> results,
       @HiveField(2)
       @JsonKey(name: 'total_pages')
       required final int total_pages,
@@ -243,7 +243,7 @@ abstract class _Popular implements Popular {
   @override
   @HiveField(1)
   @JsonKey(name: 'results')
-  List<Object> get results;
+  List<Results> get results;
   @override
   @HiveField(2)
   @JsonKey(name: 'total_pages')
